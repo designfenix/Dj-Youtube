@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="background-container"></div>
+        <section class="start-page">
+            <header>
+                <h1 class="logo-b animated fadeIn">Dj Tube - Online Youtube Mixer</h1>
+                <div class="search-content animated fadeInUpBig">
+                    <div class="input-content">
+                        <form class="search-form">
+                            <input type="text" class="search-input" name="search" placeholder="Search Music...">
+                            <button type="submit" class="search-button"></button>
+                        </form>
+                    </div>
+                </div>
+            </header>
+        </section>
+        
+        <section class="application">
+            <div class="container">
+                <aside>
+                    <h1 class="logo">Dj Tube - Online Youtube Mixer</h1>
+                    <div class="under-content">
+                       <h3>Playlist</h3>
+                       <hr/>
+                       <div class="playlist">
+                           <ul>
+                           </ul>
+                       </div>
+                    </div>
+                </aside>
+                <article class="content-player">
+                    <div class="background"></div>
+                    <button id="play">PLAY!</button>
+                </article>
+                <div class="clearfix"></div>
+                <div class="youtube-logo">
+                    <img src="img/youtube-logo.jpg" alt="">
+                </div>
+                <div class="search-container">
+                    <div class="search-content">
+                        <div class="input-content">
+                            <form class="search-form">
+                                <input type="text" class="search-input" name="search" placeholder="Search Music...">
+                                <button type="submit" class="search-button"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="search-result">
+                    <div class="under-content">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </section>
+        <div id="overlay"><img id="loading" src="img/loading.gif"></div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+        <script src="js/handlebars.js"></script>
+        <script src="js/jQuery.tubeplayer.min.js"></script>
+        <script src="js/jquery.nicescroll.min.js"></script>
+        
+
+        <script id="application-template" type="text/x-handlebars-template">
+            {{#each items}}
+            <div class="item-search">
+                <div class="column">
+                    <img src="{{thumbnail.sqDefault}}" alt="" />
+                </div>
+                <div class="column">
+                    <h4>{{title}}</h4>
+                    <span class="time">{{convertDuration duration}}</span>
+                    <div class="text-center">
+                        <button data-id-video="{{id}}" class="{{checkPlaylistStatus id}} button">{{checkPlaylistStatus id}} to Playlist </button>
+                    </div>
+                </div>
+            </div>                
+            {{/each}}
+
+
+        </script>
+        <script id="playlist-template" type="text/x-handlebars-template">
+            {{#each items}}
+            <li data-id-video="{{id}}">
+                <a href="#" class="close"><img src="img/remove-item-playlist.jpg" alt="Remove track" /></a>
+                <div class="column-one">
+                    <img src="{{src}}" alt=""/>
+                </div>
+                <div class="column-two">
+                    <span class="title">
+                        {{title}}
+                    </span>
+                    <span class="time">{{duration}}</span>
+                    <span class="status wait">QUEUED</span>
+                </div>
+                <div class="video-youtube" id="video-{{id}}"></div>
+            </li>
+            {{/each}}
+
+        </script>
+        
+        <script src="js/main.js"></script>
+    </body>
+</html>
