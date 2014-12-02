@@ -43,7 +43,7 @@ var djTube = {
 				$('.application').show();
 				setTimeout( function() {
 					if(mount==undefined){
-						$('#search-result .under-content').html(template(data)+'<div class="clearfix"></div><div class="text-center"><span class="load-more">Load More</span></div>');
+						$('#search-result .under-content').html(template(data)+'<div class="content-load-more"><div class="clearfix"></div><div class="text-center"><span class="load-more">Load More</span></div></div>');
 						djTube.startSearchResult=20;
 					}else{
 						$('#search-result .under-content').append(template(data));
@@ -66,10 +66,10 @@ var djTube = {
 	},
 	buttonLoader: function(show){
 		if(show){
-			$('.load-more').html('Loading...').addClass('init');
+			$('.content-load-more .load-more').html('Loading...').addClass('init');
 		}else{
-			$('.load-more').prev().appendTo($('#search-result .under-content'));
-			$('.load-more').html('Load More').removeClass('init').parent().appendTo($('#search-result .under-content'));
+			$('.content-load-more').appendTo($('#search-result .under-content'));
+			$('.content-load-more .load-more').html('Load More').removeClass('init').parents('.content-load-more').appendTo($('#search-result .under-content'));
 		}
 	},
 	addPlaylist: function(id){
@@ -81,9 +81,11 @@ var djTube = {
 		this.changeButton('add',id);
 	},
 	removePlaylist: function(idVal){
+		
 		$.grep(djTube.playlist['items'], function(item,i){
 			if ( item.id ==  idVal) {
 		        djTube.playlist['items'].splice(i, 1);
+
 		    }
 	    });
 	    djTube.changeButton('remove',idVal);
@@ -113,7 +115,6 @@ var djTube = {
 			var template = Handlebars.compile(templateSource);
 			$('.playlist ul').html(template(this.playlist)).promise().done(function(){
 		    	$('.application .playlist').getNiceScroll().resize();
-
 				$('.video-youtube').each(function(){
 					if(!$(this).hasClass('jquery-youtube-tubeplayer')){
 						$(this).tubeplayer({initialVideo:id});
