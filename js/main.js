@@ -6,6 +6,8 @@ var djTube = {
 	backgroundContainer : $('#background-container'),
 	backgrounds : ['bg-1.jpg','bg-2.jpg','bg-3.jpg','bg-4.jpg','bg-5.jpg','bg-6.jpg'], 
 	loaderContent : $('#overlay'),
+	desk1: $('#desk-1'),
+	desk2: $('#desk-2'),
 	limitSearchResult : 20,
 	lastSearch : '',
 	startSearchResult : 20,
@@ -81,14 +83,13 @@ var djTube = {
 		this.changeButton('add',id);
 	},
 	removePlaylist: function(idVal){
-		
 		$.grep(djTube.playlist['items'], function(item,i){
-			if ( item.id ==  idVal) {
+			if(item.id ==  idVal){
 		        djTube.playlist['items'].splice(i, 1);
-
+		        djTube.changeButton('remove',idVal);
 		    }
 	    });
-	    djTube.changeButton('remove',idVal);
+	    
 	},
 	changeButton: function(action,idVal){
 		if(action=="remove"){
@@ -115,11 +116,11 @@ var djTube = {
 			var template = Handlebars.compile(templateSource);
 			$('.playlist ul').html(template(this.playlist)).promise().done(function(){
 		    	$('.application .playlist').getNiceScroll().resize();
-				$('.video-youtube').each(function(){
+				/*$('.video-youtube').each(function(){
 					if(!$(this).hasClass('jquery-youtube-tubeplayer')){
 						$(this).tubeplayer({initialVideo:id});
 					}
-				})
+				})*/
 		    });
 			
 		}else{
@@ -142,7 +143,14 @@ var djTube = {
 	   		return minutes+":"+seconds;
 	   }
 	    
-	}
+	},
+	startMix: function(){
+		var idVideo = $('.playlist li:first').attr('data-id-video');
+		$('.content-player .background').css("background-image",'none');
+		$('.playlist li:first').addClass("play").find('.status').html("PLAYING");
+		$('.start').remove();
+		this.desk1.tubeplayer({initialVideo:idVideo,allowFullScreen:false,autoPlay:true});
+	},
 
 }
 
@@ -183,10 +191,11 @@ $(function(){
 		djTube.ajaxSearch(inputSearch.val(),djTube.startSearchResult,e);
 	});	
 
-	$('#play').on('click',function(){
-		var idVideo = $('.playlist li:first').attr('data-id-video');
-		$('#video-'+idVideo).tubeplayer("play");
-	});
+	$('.start').on('click', function(){
+		if($('.playlist li').length>=2){
+			djTube.startMix();
+		}
+	})
 
 	/*Playlist*/
 	$('#search-result').on('click','.button',function(){
@@ -202,6 +211,7 @@ $(function(){
 			djTube.removePlaylist($(this).parents('li').attr('data-id-video'));
 		}
 	});
+	
 	
 
 });
