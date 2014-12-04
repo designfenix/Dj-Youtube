@@ -28,7 +28,7 @@ var djTube = {
 	setBackground: function(){
 		var image = this.backgrounds[Math.floor(Math.random()*6)];
 		this.backgroundContainer.css('background-image','url(img/wallpapers/' + image + ')');
-		$('.content-player .background').css('background-image','url(img/wallpapers/' + image + ')');
+		$('.container-player .background').css('background-image','url(img/wallpapers/' + image + ')');
 	},
 	ajaxSearch: function(data,mount){
 
@@ -147,7 +147,7 @@ var djTube = {
 	},
 	startMix: function(){
 		var idVideo = $('.playlist li:first').attr('data-id-video');
-		$('.content-player .background').css("background-image",'none');
+		$('.container-player .background').css("background-image",'none');
 		$('.playlist li:first').addClass("play").find('.status').html("PLAYING");
 		$('.start').remove();
 		this.desk1.tubeplayer({initialVideo:idVideo,allowFullScreen:false,autoPlay:true});
@@ -211,6 +211,10 @@ $(function(){
 		}else{
 			djTube.notice('red','Must select 2 minimum songs')
 		}
+	})
+
+	$('.expand-player').on('click',function(){
+		$('.container-player').toggleClass('expand');
 	})
 
 	/*Playlist*/

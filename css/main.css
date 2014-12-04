@@ -58,6 +58,13 @@ textarea {
     color: #000;
     padding: 0.2em 0;
 }
+.transition{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
 
 
 /* ==========================================================================
@@ -84,6 +91,12 @@ body{
 */
 
 
+
+@-webkit-keyframes spin {
+    0%  {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}   
+}
+
 /*START PAGE*/
 
 #background-container{
@@ -93,13 +106,16 @@ body{
     top: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/spacer.png') no-repeat center center fixed #222; 
+    background-color: #222; 
+    background-position: center center;
+    background-position: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
 .start-page {
+
 }
 .start-page header h1.logo-b{
     background: url('../img/logo-big.png') no-repeat top left transparent;
@@ -298,8 +314,8 @@ body{
 .application .under-content li.play .status,.application .under-content li.play .status:before{
     color: #86cf31;
 }
-.application .content-player{
-    min-height:500px;
+.application .container-player{
+    height:500px;
     width: 70%;
     float: left;
     overflow: hidden;
@@ -311,11 +327,20 @@ body{
     filter: blur(0px);
     
 }
-.application .content-player iframe{
+.application .container-player.expand{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
     width: 100%;
     height: 100%;
 }
-.application .content-player .start{
+.application .container-player iframe{
+    width: 100%;
+    height: 100%;
+}
+.application .container-player .start{
     font-family: 'Lato', arial, helvetica, sans-serif;
     font-size: 18px;
     font-weight: normal;
@@ -344,7 +369,7 @@ body{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9dc524', endColorstr='#849c46',GradientType=0 ); /* IE6-9 */
     cursor: pointer;
 }
-.application .content-player .start:hover{
+.application .container-player .start:hover{
     background: #93db27; /* Old browsers */
     background: -moz-linear-gradient(top,  #93db27 0%, #87aa2e 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#93db27), color-stop(100%,#87aa2e)); /* Chrome,Safari4+ */
@@ -354,7 +379,7 @@ body{
     background: linear-gradient(to bottom,  #93db27 0%,#87aa2e 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93db27', endColorstr='#87aa2e',GradientType=0 ); /* IE6-9 */
 }
-.application .content-player .start:active{
+.application .container-player .start:active{
     background: #849c46; /* Old browsers */
     background: -moz-linear-gradient(top,  #849c46 0%, #9dc524 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#849c46), color-stop(100%,#9dc524)); /* Chrome,Safari4+ */
@@ -364,7 +389,7 @@ body{
     background: linear-gradient(to bottom,  #849c46 0%,#9dc524 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#849c46', endColorstr='#9dc524',GradientType=0 ); /* IE6-9 */
 }
-.application .content-player .background,#desk-1,#desk-2{
+.application .container-player .background,#desk-1,#desk-2{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -402,6 +427,124 @@ body{
     -o-transform: scale(1.2);
     -ms-transform: scale(1.2);
 }
+.container-player .expand-player{
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 50;
+}
+.container-player .expand-player > span{
+    position: relative;
+    opacity: 0;
+    font-size: 14px;
+    color: #fff;
+    top: -50px;
+}
+.container-player .expand-player:hover > span{
+    opacity: 1;
+    top: 0;
+}
+.container-player .expand-player > img{
+    opacity: 0.8;
+}
+.container-player .expand-player:hover > img{
+    opacity: 1;
+}
+.container-player .content-player{
+    position: relative;
+    z-index: 3;
+}
+.container-player .content-player .list-cover{
+    margin: 0;
+    padding: 0;
+    margin-left: 5%;
+    float: left;
+    width: 40%;
+}
+.container-player .content-player .list-cover li{
+    position: relative;
+    max-width: 253px;
+    width: 100%;
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+    margin: 90px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+.container-player .content-player .list-cover li.active{
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+}
+.container-player .content-player .list-cover li .cover-content{
+    position: absolute;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,0.68);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.68);
+}
+.container-player .content-player .list-cover li .cover-content .mask{
+    position: absolute;
+    z-index: 4;
+    width: 100%;
+}
+.container-player .content-player .list-cover li .cover-content .cover{
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    width: 135%;
+    margin-left: -17%;
+}
+.container-player .content-player .list-cover li .disc{
+    width: 100%;
+    position: relative;
+}
+.container-player .content-player .list-cover li.active .disc{
+    left: 70px;
+}
+.container-player .content-player .list-cover li.active .disc.spin{
+    -webkit-animation: spin 4s infinite linear;
+}
+
+.container-player .content-player .playing-detail{
+    position: relative;
+    float: left;
+    width: 45%;
+    margin-top: 60px;
+}
+.container-player .content-player .playing-detail h3{
+    font-weight: 100;
+    color: #fff;
+    font-size: 24px;
+    text-shadow: 0 0 5px #000000;
+    margin-bottom: 20px;
+}
+.container-player .content-player .playing-detail .user,.container-player .content-player .playing-detail .views{
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 0 5px #000000;
+    font-weight: normal;
+}
+.container-player .content-player .playing-detail .user{
+    float: left;
+}
+.container-player .content-player .playing-detail .views{
+    float: right;
+    padding-left: 25px;
+    background: url('../img/views-icon.png') 0px 5px no-repeat;
+}
+
 
 .application .search-content{
     float: none;
@@ -415,6 +558,10 @@ body{
     text-align: center;
     float: left;
     width: 30%;
+}
+.application .youtube-logo iframe{
+    width: 110px;
+    vertical-align: middle;
 }
 .application .search-container{
     float: left;
