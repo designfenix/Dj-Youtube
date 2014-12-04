@@ -129,19 +129,20 @@ var djTube = {
 		
 	},
 	convertDuration: function(val){
-		var hours = Math.floor(val / (60 * 60));
+		var sec_num = parseInt(val, 10); // don't forget the second param
+	    var hours   = Math.floor(sec_num / 3600);
+	    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+	    var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-		var divisor_for_minutes = val % (60 * 60);
-		var minutes = Math.floor(divisor_for_minutes / 60);
-
-		var divisor_for_seconds = divisor_for_minutes % 60;
-		var seconds = Math.ceil(divisor_for_seconds);
-
-		if(hours!=0){
-			return hours+":"+minutes+":"+seconds;
-		}else{
-	   		return minutes+":"+seconds;
-	   }
+	    if (hours   < 10) {hours   = "0"+hours;}
+	    if (minutes < 10) {minutes = "0"+minutes;}
+	    if (seconds < 10) {seconds = "0"+seconds;}
+	    if(hours!=00){
+	    	var time    = hours+':'+minutes+':'+seconds;
+	    }else{
+	    	var time    = minutes+':'+seconds;
+	    }
+	    return time;
 	    
 	},
 	startMix: function(){
@@ -151,6 +152,19 @@ var djTube = {
 		$('.start').remove();
 		this.desk1.tubeplayer({initialVideo:idVideo,allowFullScreen:false,autoPlay:true});
 	},
+	notice: function(color,text) {
+		new jBox('Notice', {
+				title: 'Oops',
+				content: text,
+				autoClose: 5000,
+				audio: 'audio/bling2',
+				volume: 50,
+				attributes: {x:'right',y:'top'},
+				theme: 'NoticeBorder',
+				color: color,
+				animation: {open:'slide:top',close:'slide:right'}
+    });
+}
 
 }
 
@@ -194,6 +208,8 @@ $(function(){
 	$('.start').on('click', function(){
 		if($('.playlist li').length>=2){
 			djTube.startMix();
+		}else{
+			djTube.notice('red','Must select 2 minimum songs')
 		}
 	})
 
@@ -206,7 +222,8 @@ $(function(){
 		}
 		
 	});
-	$('.playlist').on('click','.close',function(){
+	$('.playlist').on('click','.close',function(e){
+		e.preventDefault();
 		if(!$(this).hasClass('play')){
 			djTube.removePlaylist($(this).parents('li').attr('data-id-video'));
 		}
