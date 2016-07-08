@@ -17,8 +17,6 @@
         <link rel="stylesheet" href="css/NoticeBorder.css">
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/main.css">
-
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         
     </head>
     <body>
@@ -121,6 +119,9 @@
         <script src="js/lib/handlebars.js"></script>
         <script src="js/lib/jQuery.tubeplayer.min.js"></script>
         <script src="js/lib/jBox.min.js"></script>
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="js/vendor/search.js"></script>
+        <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
         <script src="js/lib/jquery.nicescroll.min.js"></script>
         
 
@@ -128,13 +129,13 @@
             {{#each items}}
             <div class="item-search">
                 <div class="column">
-                    <img src="{{thumbnail.sqDefault}}" alt="" />
+                    <img src="{{snippet.thumbnails.default.url}}" alt="" />
                 </div>
                 <div class="column">
-                    <h4>{{title}}</h4>
+                    <h4>{{snippet.title}}so</h4>
                     <span class="time">{{convertDuration duration}}</span>
                     <div class="text-center">
-                        <button data-id-video="{{id}}" class="{{checkPlaylistStatus id}} button">{{checkPlaylistStatus id}} to Playlist </button>
+                        <button data-id-video="{{id.videoId}}" class="{{checkPlaylistStatus id.videoId}} button">{{checkPlaylistStatus id.videoId}} to Playlist </button>
                     </div>
                 </div>
             </div>                
@@ -155,6 +156,18 @@
                     <span class="status">QUEUED</span>
                 </div>
                 <div class="video-youtube" id="video-{{id}}"></div>
+            </li>
+            {{/each}}
+        </script>
+        <script id="list-cover" type="text/x-handlebars-template">
+            {{#each items}}
+            <li class="transition">
+                <div class="cover-content">
+                    <img class="mask" src="img/mask-cover.png" alt=""/>
+                    <img class="cover" src="{{src}}" alt=""/>
+                    <div class="clearfix"></div>
+                </div>
+                <img class="disc transition spin" src="img/disc.png" alt="" />
             </li>
             {{/each}}
         </script>

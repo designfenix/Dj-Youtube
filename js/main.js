@@ -1,6 +1,7 @@
 
 var djTube = {
-
+	
+	apikey: 'AIzaSyDYwPzLevXauI-kTSVXTLroLyHEONuF9Rw',
 	crossFadeSecond : '10000',
 	playlist : {'items':[]},
 	backgroundContainer : $('#background-container'),
@@ -10,7 +11,7 @@ var djTube = {
 	desk2: $('#desk-2'),
 	limitSearchResult : 20,
 	lastSearch : '',
-	startSearchResult : 20,
+	pageTk : '',
 
 	init: function(){
 
@@ -34,11 +35,13 @@ var djTube = {
 
 		var templateSource = $('#application-template').html();
 		var template = Handlebars.compile(templateSource);
-		$('.application .search-input').val(data)
-		$.ajax({
+		$('.application .search-input').val(data);
+
+		search(data,mount,template,templateSource);
+
+		/*$.ajax({
 			url: 'http://gdata.youtube.com/feeds/api/videos?q=' + data + '&max-results=' + djTube.limitSearchResult + (mount!=undefined?'&start-index='+djTube.startSearchResult:'') + '&v=2&alt=jsonc',
 			success: function (response) {
-				/*Scroll bottom*/
 				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 				data = response.data;
 				$('.start-page').hide();
@@ -54,7 +57,7 @@ var djTube = {
 					(mount==undefined?djTube.loader(false):djTube.buttonLoader(false));					
 				},1000);
 			}
-		});
+		});*/
 	},
 	loader: function(show){
 		if(show){
@@ -112,6 +115,10 @@ var djTube = {
 	},
 	updatePlaylist: function(action,id){
 		if(action=="add"){
+			var templateSource2 = $('#list-cover').html();
+			var template2 = Handlebars.compile(templateSource2);
+			$('.list-cover').html(template2(this.playlist));
+
 			var templateSource = $('#playlist-template').html();
 			var template = Handlebars.compile(templateSource);
 			$('.playlist ul').html(template(this.playlist)).promise().done(function(){
