@@ -21,10 +21,6 @@ var djTube = {
 		$(".application .playlist,#search-result .under-content").niceScroll();
  		$("html, body").scrollTop( 0 );
 
-		
-		/*special actions for holiday's*/
-		this.holidayAction();
-
 		/*animated Logo and Search*/
 		$('.start-page .logo-b').addClass('fadeIn');
 		$('.start-page .search-content').addClass('fadeInUpBig');
@@ -45,20 +41,6 @@ var djTube = {
 	        this.notice('pink','Dedicated to Dani Falla, ia tu sabes','Yeeah!')
 	        this.combinationCode = [];
 	    }
-	},
-	holidayAction: function(){
-		var now = new Date();
-		var Christmas = new Date("December 24, 2015");
-		var NewYear = new Date("January 01, 2016");
-
-		if(now == Christmas) // today is after Christmas
-		{
-		     $('#background-container').snowfall({flakeCount : 100, maxSpeed : 10});
-		}
-		if(now == NewYear) // today is after New Year
-		{
-		     alert("Happy New Year!");
-		}
 	},
 	setBackground: function(){
 		var image = this.backgrounds[Math.floor(Math.random()*11)];
