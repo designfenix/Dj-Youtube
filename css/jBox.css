@@ -247,10 +247,13 @@
 }
 
 .jBox-Notice-blue .jBox-container {
-	background: #2b91d9;
+	background: #5abaff;
 	background-image: linear-gradient(to bottom, #5abaff, #2b91d9);
 }
-
+.jBox-Notice-pink .jBox-container {
+	background: #FF68C7;
+	background-image: linear-gradient(to bottom, #FF6BA6, #FF3292);
+}
 .jBox-Notice-yellow .jBox-container {
 	color: #744700;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .6);

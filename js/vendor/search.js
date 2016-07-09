@@ -13,6 +13,7 @@ function search(dataQ,mount,template,templateSource) {
         function(data) {
 
           djTube.pageTk=data.nextPageToken;
+          $("html, body").animate({ scrollTop: $(document).height() }, 1000);
 
           console.log(data.items);
             for (var i = 0; i < data.items.length; i++) {
@@ -20,7 +21,6 @@ function search(dataQ,mount,template,templateSource) {
                 
                 if (data.items.length > 0) {
                     /*Scroll bottom*/
-                    $("html, body").animate({ scrollTop: $(document).height() }, 1000);
                     $('.start-page').hide();
                     $('.application').show();
                     setTimeout( function() {

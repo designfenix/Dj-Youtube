@@ -43,6 +43,9 @@
 .jBox-NoticeBorder.jBox-Notice-yellow .jBox-container:after {
 	background-color: #ffba00;
 }
+.jBox-NoticeBorder.jBox-Notice-pink .jBox-container:after{
+	background-color: #FF68C7;
+}
 /*custom*/
 .jBox-content{
 	font-family: 'Lato', arial, helvetica, sans-serif;
